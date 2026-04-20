@@ -6,7 +6,9 @@ use App\Models\V1\Offer;
 
 class OfferBidService{
 
-public function bid($id){ // please move to performance-fix-bid-api.md file
+public function bid($id){
+
+// please move to performance-fix-bid-api.md file
 
 
   $offers= Offer::where('offer_status','accepted')->whereHas('freelancer.profile')->where('freelancer_id',$id)->get();

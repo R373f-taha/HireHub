@@ -5,9 +5,11 @@
 
 
 📖 About the Project
+
 HireHub is an online platform that connects Clients with Freelancers. The platform aims to facilitate the process of finding new clients for freelancers, finding the right freelancers for clients, and managing projects, proposals, and reviews professionally.
 
 🎯 Problems the Project Solves
+
 ✅ Difficulty finding clients: HireHub provides freelancers with a space to showcase their skills and access real projects.
 
 ✅ Finding reliable freelancers: Clients can rate freelancers and view their profiles before contracting.
@@ -18,7 +20,7 @@ HireHub is an online platform that connects Clients with Freelancers. The platfo
 
 
 
-API Collection
+API Collection  💛
 
 https://documenter.getpostman.com/view/50321677/2sBXqDtPXQ
 

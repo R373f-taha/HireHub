@@ -45,10 +45,23 @@ public function skills(){
                       ->where('is_verified',true);
     }
 
+    public function scopeAvailableAndVerifiedFreelancer($query){
+
+    return $query->where('is_verified',true)->where('is_active',true)->whereHas('profile',function($q){
+              $q->where('available_mode','available');
+    });
+    }
+
     public function reviews(){
         return $this->hasMany(Review::class);
     }
         public function averageRating(){
         return $this->reviews()->avg('freelancer_rating');
+    }
+
+    public function scopeOrderByReviews($query){
+
+       $query->withAvg('reviews','freelancer_rating')->orderBy('reviews_avg_freelancer_rating','DESC');
+
     }
 }
