@@ -14,7 +14,7 @@ class OfferBidService{
 $result=Offer::with('freelancer.profile')->where('freelancer_id',$id)->where('offer_status','accepted')->get();
 
 
- if(empty($result))
+ if($result->isEmpty())
 
     return ['This freelancer doesn\'t have any accepted offers '];
 

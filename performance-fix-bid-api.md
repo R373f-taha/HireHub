@@ -4,7 +4,7 @@ API: `GET api/bids/{id}`
 
 OfferBidService  في
 
-الكود  :
+  الكود الذي يسبب المشكلة :
 
 public function bid($id){
 
@@ -50,7 +50,7 @@ N+1 problem
 $result=Offer::with('freelancer.profile')->where('freelancer_id',$id)->where('offer_status','accepted')->get();
 
 
- if(empty($result))
+ if(if($result->isEmpty()))
 
     return ['This freelancer doesn\'t have any accepted offers '];
 
