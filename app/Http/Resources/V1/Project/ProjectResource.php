@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\V\Project;
+namespace App\Http\Resources\V1\Project;
 
 use App\Http\Requests\V1\Project\CreateProjectRequest;
 use Illuminate\Http\Request;

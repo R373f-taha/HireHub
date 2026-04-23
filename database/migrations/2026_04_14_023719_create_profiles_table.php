@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('image')->nullable();
-            $table->string('protofilo_link');
+            $table->string('portfolio_link');
             $table->decimal('hour_rate',10,2);
             $table->string('phone')->nullable();
-            $table->json('skills_summery');
+            $table->json('skills_summary');
             $table->enum('available_mode',['available','not available','busy']);
             $table->foreignId('freelancer_id')->constrained('freelancers','id')->onDelete('cascade')->onUpdate('cascade')->unique();
             $table->timestamps();

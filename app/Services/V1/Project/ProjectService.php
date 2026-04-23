@@ -4,7 +4,7 @@ namespace App\Services\V1\Project;
 
 use App\Actions\V1\Project\CreateProjectAction;
 use App\Http\Requests\V1\Project\CreateProjectRequest;
-use App\Http\Resources\V\Project\ProjectResource;
+use App\Http\Resources\V1\Project\ProjectResource;
 use App\Models\V1\Project;
 
 class ProjectService{

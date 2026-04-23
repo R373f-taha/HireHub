@@ -26,12 +26,12 @@ class ProfileFactory extends Factory
              'first_name'=>$this->faker->firstName(),
              'last_name'=>$this->faker->lastName(),
             'image'=>$this->faker->imageUrl(200,200,'people'),
-            'protofilo_link'=>$this->faker->url(),
+            'portfolio_link'=>$this->faker->url(),
             'hour_rate'=>$this->faker->numberBetween(10,20),
             'phone'=>$this->faker->phoneNumber(),
             'available_mode'=>$this->faker->randomElement(['available','not available','busy']),
              'freelancer_id'=>Freelancer::factory(),
-             'skills_summery'=>json_encode([
+             'skills_summary'=>json_encode([
                  'name' =>$this->faker->word,
                  'info'=>$this->faker->paragraph
              ]),

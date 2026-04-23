@@ -17,8 +17,8 @@ class Profile extends Model
     {
         return [
             'hour_rate' => 'float',
-             'skills_summary'=>'array',
-             'protofilo_link'=>'array'
+           //  'skills_summary'=>'array',
+             'portfolio_link'=>'array'
 
         ];
     }
@@ -28,7 +28,7 @@ class Profile extends Model
    }
 
 
-   protected function fullName(){
+   protected function fullName():Attribute{
    return Attribute::make(
     get:fn($value,$attributes)=>$attributes['first_name'].' '.$attributes['last_name']
 
@@ -36,15 +36,15 @@ class Profile extends Model
    }
 
 
-    protected function avatar(){
+    protected function avatar():Attribute{
    return Attribute::make(
-    get:fn()=>$this->image??'default avatar'
+    get:fn()=>$this->image?asset('storage/'.$this->image):'https://ui-avatars.com/api/?name='.$this->fullName
 
    );
    }
 
 
-    protected function joinDate(){
+    protected function joinDate():Attribute{
    return Attribute::make(
     get:fn()=>'Member since '.$this->created_at->month.' '.$this->created_at->year
 
@@ -54,7 +54,7 @@ class Profile extends Model
 
     protected function phone(){
    return Attribute::make(
-
+    get:fn($value)=>$value ?? '',
     set:function($value){
       $cleand=preg_replace('/[^0-9+]/','',$value);
     preg_replace('/(\+\d{3})(\d{2})(\d{4})(\d{3})/','$1 $2 $3 $4',$cleand) ;} //+962 79 1234 567
@@ -63,25 +63,26 @@ class Profile extends Model
 
    }
 
-   protected  function summery(){
+   protected  function skillsSummary():Attribute{
      return Attribute::make(
 
      set:fn($value)=>is_array($value) ?json_encode($value):$value,
-     get:fn($value)=>json_decode($value,true)
+     get:fn($value)=>is_null($value)?[]:(is_array($value)?$value:json_decode($value,true)?? [])
 
    );
    }
 
 
-   protected  function protofiloLink(){
+   protected  function portfolioLink():Attribute{
      return Attribute::make(
 
-     set:fn($value)=>is_array($value) ?json_encode($value):$value,
-     get:fn($value)=>json_decode($value,true)
+   set:fn($value)=>is_array($value) ?json_encode($value):$value,
+     get:fn($value)=>is_null($value)?[]:(is_array($value)?$value:json_decode($value,true)?? [])
+
    );
    }
    public function scopeOnlyAvailable($query){
-    
+
     return $query->where('available_mode','available');
    }
 

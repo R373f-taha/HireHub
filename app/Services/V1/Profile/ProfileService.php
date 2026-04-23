@@ -5,12 +5,21 @@ namespace App\Services\V1\Profile;
 use App\Actions\V1\Profile\CreateProfileAction;
 use App\Actions\V1\Profile\UpdateProfileAction;
 use App\Http\Requests\V1\Profile\UpdateProfileRequest;
+use App\Http\Resources\V1\Profile\ProfileResource;
 use App\Models\V1\Profile;
 use Exception;
 use Illuminate\Http\Request;
 
 class ProfileService{
 
+
+public function index(){
+
+$profiles=Profile::with('freelancer')->get();
+
+return ProfileResource::collection($profiles);
+
+}
 
 public function update(UpdateProfileRequest $request,$id){
 

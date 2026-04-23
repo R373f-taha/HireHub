@@ -16,9 +16,9 @@ class ProfileController extends Controller
 
 protected $profileService;
 
-   public function __construct(ProfileService $preofileService)
+   public function __construct(ProfileService $profileService)
    {
-    $this->profileService=$preofileService;
+    $this->profileService=$profileService;
    }
     /**
      * Display a listing of the resource.
@@ -26,7 +26,9 @@ protected $profileService;
 
     public function index()
     {
-        //
+     $allData=$this->profileService->index();
+
+     return response()->json(['success'=>true,'data'=>$allData]);
     }
 
     /**

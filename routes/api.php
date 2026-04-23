@@ -32,7 +32,7 @@ Route::get('freelancers/available/verified',[FreelancerController::class,'availa
 Route::get('freelancers/available/verified/sorted',[FreelancerController::class,'getAvailableVerifiedFreelancersSorted']);
 Route::get('freelancers/active',[FreelancerController::class,'getAvailableVerifiedAndActiveFreelancers']);
 Route::get('admin/panel',[AdminController::class,'adminPanel'])->middleware(['auth:sanctum','is_admin']);
-
+Route::get('freelancers/profiles',[ProfileController::class,'index']);
 
 
 });
