@@ -46,46 +46,5 @@ $acceptedOffer=$project->offers()->where('offer_status','accepted')->first();
 
 }
 
-public function freelancerReviews($freelancerId){
 
-$reviews=Review::where('freelancer_id',$freelancerId)->with('project.client')->get();
-
-$averageRating=$reviews->average('freelancer_rating');
-
-$stars='☆☆☆☆☆';
-
-    if ($averageRating < 5) {
-        $stars = '⭐☆☆☆☆';
-    } elseif ($averageRating < 8) {
-        $stars = '⭐⭐⭐☆☆';
-    } else {
-        $stars = '⭐⭐⭐⭐⭐';
-    }
-
-  return response()->json([
-            'success' => true,
-            'average_rating' => round($averageRating, 1).$stars,
-            'total_reviews' => $reviews->count(),
-            'data' => $reviews
-        ]);
-}
-
-public function projectReview($projectId){
-
-$review=Review::where('project_id',$projectId)->with(['freelancer.user','client.user'])->first();
-
-$stars='☆☆☆☆☆';
-
-    if ($review < 5) {
-        $stars = '⭐☆☆☆☆';
-    } elseif ($review < 8) {
-        $stars = '⭐⭐⭐☆☆';
-    } else {
-        $stars = '⭐⭐⭐⭐⭐';
-    }
-  return response()->json([
-            'success' => true,
-            'review' => $review.$stars
-        ]);
-}
 }

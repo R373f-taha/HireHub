@@ -5,17 +5,19 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Review\storeReviewRequest;
 use App\Models\V1\Review;
+use App\Services\V1\Review\GetReviewsService;
 use App\Services\V1\Review\ReviewService;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
 
-protected $reviewService;
+protected $reviewService,$getReviewService;
 
-public function __construct(ReviewService $reviewService){
+public function __construct(ReviewService $reviewService,GetReviewsService $getReviewsService){
 
 $this->reviewService=$reviewService;
+$this->getReviewService=$getReviewsService;
 }
     /**
      * Display a listing of the resource.
@@ -35,12 +37,12 @@ $this->reviewService=$reviewService;
 
     public function freelancerReview($freelancerId){
 
-    return $this->reviewService->freelancerReviews($freelancerId);
+    return $this->getReviewService->freelancerReviews($freelancerId);
     }
 
     public function  projectReview($projectId){
 
-    return $this->reviewService->projectReview($projectId);
+    return $this->getReviewService->projectReview($projectId);
     }
 
     /**

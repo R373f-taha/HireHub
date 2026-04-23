@@ -22,7 +22,7 @@ Route::prefix('V1/')->group(function(){
 Route::get('offer/{offerId}',[OffersController::class,'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{id}', [ProjectController::class, 'show']);
-Route::get('bid/{f}',[OffersController::class,'getbid']);
+Route::get('bid/{freelancerId}',[OffersController::class,'getbid']);
 Route::post('users/register',[UserController::class,'register']);
 Route::get('offers',[OffersController::class,'index']);
 Route::get('freelancer/{freelancerId}/reviews',[ReviewController::class,'freelancerReview']);
@@ -65,6 +65,6 @@ Route::prefix('V1/')->group(function(){
     Route::put('/projects/{id}', [ProjectController::class, 'update']);
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
     Route::post('reviews',[ReviewController::class,'store']);
-
+    Route::get('ranking/freelancers/by/ratings',[FreelancerController::class,'freelancerRanking']);
 });});
 

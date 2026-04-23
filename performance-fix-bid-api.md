@@ -4,6 +4,29 @@ API: `GET api/bids/{id}`
 
 OfferBidService  في
 
+الكود  :
+
+public function bid($id){
+
+
+  $offers= Offer::where('offer_status','accepted')->whereHas('freelancer.profile')->where('freelancer_id',$id)->get();
+
+
+  $results=[];
+
+  $results['offers'][]=[$offers];
+
+  foreach($offers as $offer){
+
+      $results['profile'][] = [$offer->profileForAcceptedOffer()] ;
+      }
+
+      $results['freelancer'][] = [Freelancer::where('id',$id)->get()];
+
+      return  $results;
+
+    }
+
 ##  سبب المشكلة
 
 N+1 problem

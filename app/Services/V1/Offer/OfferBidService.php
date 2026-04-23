@@ -6,26 +6,19 @@ use App\Models\V1\Offer;
 
 class OfferBidService{
 
-public function bid($id){
 
-// please move to performance-fix-bid-api.md file
+ public function bid($id){
+
+ //please move to the performance-fix-bid-api.md
+
+$result=Offer::with('freelancer.profile')->where('freelancer_id',$id)->where('offer_status','accepted')->get();
 
 
-  $offers= Offer::where('offer_status','accepted')->whereHas('freelancer.profile')->where('freelancer_id',$id)->get();
+ if(empty($result))
 
+    return ['This freelancer doesn\'t have any accepted offers '];
 
-  $results=[];
+ return $result;
 
-  $results['offers'][]=[$offers];
-
-  foreach($offers as $offer){
-
-      $results['profile'][] = [$offer->profileForAcceptedOffer()] ;
-      }
-
-      $results['freelancer'][] = [Freelancer::where('id',$id)->get()];
-
-      return  $results;
-
-    }
+}
 }

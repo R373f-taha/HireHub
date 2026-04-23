@@ -43,7 +43,7 @@ public function show($offerId){
             'data for rejected offer'=>['offer'=>$offer,'project'=>$project]]);
         }
 
-return response()->json('ooooo');
+return response()->json(['offer'=>$offer]);
 
         }
 

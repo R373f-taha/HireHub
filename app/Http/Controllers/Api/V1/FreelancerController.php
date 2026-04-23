@@ -8,23 +8,27 @@ use App\Http\Requests\V1\Offer\CreateOfferRequest;
 use App\Models\V1\Freelancer;
 use App\Services\V1\Freelancer\FilterFreelancersService;
 use App\Services\V1\Freelancer\FreelancerService;
+use App\Services\V1\Freelancer\SubmitOfferByFreelancer;
 use Illuminate\Http\Request;
 
 class FreelancerController extends Controller
 {
-       protected $freelancerService,$filterFreelancersService;
-    public function __construct(FreelancerService $freelancerService,FilterFreelancersService $filterFreelancersService)
+       protected $freelancerService,$filterFreelancersService,$submitOfferService;
+    public function __construct(FreelancerService $freelancerService,FilterFreelancersService $filterFreelancersService
+    ,SubmitOfferByFreelancer $submitOfferByFreelancer)
     {
         $this->freelancerService=$freelancerService;
-        
+
         $this->filterFreelancersService=$filterFreelancersService;
+
+        $this->submitOfferService=$submitOfferByFreelancer;
     }
 
     public function submitOffer(CreateOfferRequest $request){
 
     $action =new CreateOfferAction();
 
-    $res=$this->freelancerService->submitOffer($request,$action);
+    $res=$this->submitOfferService->submitOffer($request,$action);
 
     return response()->json($res);
 
@@ -53,12 +57,19 @@ class FreelancerController extends Controller
 
     return $this->filterFreelancersService->getAvailableVerifiedAndActiveFreelancers();
     }
+
+    public function freelancerRanking(){
+
+    $freelancers=$this->freelancerService->freelancerRanking();
+
+    return response()->json(['success'=>true,'freelancers'=>$freelancers]);
+    }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
