@@ -47,6 +47,7 @@ class FilterFreelancersService{
 
     $freelancers=Cache::remember('AvailableVerifiedAndActiveFreelancers',3600,function(){
 
+
     return  Cache::withoutOverlapping('AvailableVerifiedAndActiveFreelancers-lock',function(){//withoutOverlapping)() = block + try +finally
 
     $data=Freelancer::activeAndVerified()->paginate(10);
