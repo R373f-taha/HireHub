@@ -19,7 +19,6 @@ $offer=Offer::where('project_id',$project_id)->where('id',$offer_id)
 // var_dump($offer);
     if (!$offer) {
         return [
-            'success' => false,
             'message' => 'Offer not found or already processed'
         ];
     }
@@ -27,7 +26,7 @@ $project=Project::findOrFail($project_id);
 
 if($project->project_status !=='open')
 
-    return ['success'=>false,'message'=>'this project is '.$project->project_status .'  so it`s not oppen for offers🙄'  ];
+    return ['message'=>'this project is '.$project->project_status .'  so it`s not oppen for offers🙄'  ];
 
 $offer->update(['offer_status'=>'accepted']);
 
@@ -38,7 +37,6 @@ Offer::where('project_id',$project_id)->where('id','!=',$offer_id)
 $project->update(['project_status'=>'in_progress']);
 
 return [
-    'success'=>true,
     'message'=>'offer accepted successfully'
 
 ];
@@ -46,7 +44,6 @@ return [
 catch(Exception $e){
     DB::rollBack();
     return [
-    'success'=>false,
     'message'=>'offer accepted failed ... something is wrong '
 
 ];

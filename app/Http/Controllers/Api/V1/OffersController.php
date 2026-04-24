@@ -27,7 +27,9 @@ class OffersController extends Controller
     public function index()
     {
 
-        return $this->offerService->index();
+         $offersAndProjectsAndClient=$this->offerService->index();
+
+         return $this->successResponse(data:$offersAndProjectsAndClient);
     }
 
     /**
@@ -36,7 +38,8 @@ class OffersController extends Controller
     public function store(CreateOfferRequest $request,CreateOfferAction $action)
     {
         $res=$this->offerService->applicationForAnOffer($request,$action);
-        return response()->json($res);
+
+        return $this->successResponse(data:$res);
 
     }
 
@@ -45,7 +48,9 @@ class OffersController extends Controller
      */
     public function show($offerId)
     {
-        return $this->offerService->show($offerId);
+         $result=$this->offerService->show($offerId);
+
+         return $this->successResponse(data:$result['data'],message:$result['message']);
     }
 
     /**

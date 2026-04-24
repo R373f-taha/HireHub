@@ -23,12 +23,12 @@ $stars='☆☆☆☆☆';
         $stars = '⭐⭐⭐⭐⭐';
     }
 
-  return response()->json([
-            'success' => true,
+  return [
+
             'average_rating' => round($averageRating, 1).$stars,
             'total_reviews' => $reviews->count(),
             'data' => $reviews
-        ]);
+        ];
 }
 
 public function projectReview($projectId){
@@ -44,10 +44,10 @@ $stars='☆☆☆☆☆';
     } else {
         $stars = '⭐⭐⭐⭐⭐';
     }
-  return response()->json([
+  return [
             'success' => true,
             'review' => $review.$stars
-        ]);
+        ];
 }
 
 }

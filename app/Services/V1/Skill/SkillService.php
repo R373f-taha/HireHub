@@ -23,11 +23,7 @@ public function store(CreateSkillRequest $request,$years_of_experience){
             'years_of_experience'=>$years_of_experience
         ]);
 
-      return response()->json([
-        'success' => true,
-        'message' => 'Skill added to freelancer successfully',
-        'data' => $skill
-    ]);
+     return $skill;
 
 }
 public function update($id,UpdateSkillRequest $request,$years_of_experience){
@@ -43,10 +39,8 @@ public function update($id,UpdateSkillRequest $request,$years_of_experience){
             'years_of_experience'=>$years_of_experience
         ]);
 
-  return response()->json([
-        'success' => true,
-        'message' => 'Skills and Experience updated successfully'
-    ]);
+  return  'Skills and Experience updated successfully';
+
 
 }
 }

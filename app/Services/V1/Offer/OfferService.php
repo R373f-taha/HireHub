@@ -21,7 +21,9 @@ return $offer;
 }
 public function index(){
 
-return      Offer::with('freelancer')->with('project')->paginate(10);
+$offers=Offer::with('freelancer')->with('project')->paginate(10);
+
+return $offers;
 }
 
 
@@ -33,17 +35,19 @@ public function show($offerId){
         if($offer->offer_status==='accepted'){
             $freelancer=$offer->freelancer;
             $project=$offer->project;
-            return response()->json(['success'=>true,
-            'data for accepted offer'=>['offer'=>$offer,'freelancer'=>$freelancer,'project'=>$project]]);
+            return ['success'=>true,
+            'message'=>'Offer accepted✅',
+            'data'=>['offer'=>$offer,'freelancer'=>$freelancer,'project'=>$project]];
         }
 
         else  if($offer->offer_status==='rejected'){
            $project=$offer->project;
-            return response()->json(['success'=>true,
-            'data for rejected offer'=>['offer'=>$offer,'project'=>$project]]);
+            return ['success'=>true,
+            'message'=>'Offer rejected ❌',
+            'data'=>['offer'=>$offer,'project'=>$project]];
         }
 
-return response()->json(['offer'=>$offer]);
+return ['success'=>true, 'message'=>'Offer suspended 😒','data'=>$offer];
 
         }
 

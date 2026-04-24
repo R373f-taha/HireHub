@@ -19,6 +19,6 @@ class AdminController extends Controller
 
     $statistics=$this->adminService->AdminPanel();
 
-    return response()->json(['success'=>true,'data'=>$statistics]);
+    return $this->successResponse(data:$statistics);
     }
 }

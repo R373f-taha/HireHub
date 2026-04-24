@@ -10,7 +10,7 @@ class FilterFreelancersService{
 
     $freelancers=Freelancer::with('profile')->availableAndVerifiedFreelancer()->paginate(10);
 
-    return response()->json(['success'=>true,'data'=>$freelancers]);
+    return $freelancers;
 
 }
 
@@ -18,15 +18,15 @@ class FilterFreelancersService{
 
     $freelancers=Freelancer::with('profile')->availableAndVerifiedFreelancer()->orderBy('created_at','desc')->paginate(10);
 
-    return response()->json(['success'=>true,'data'=>$freelancers]);
+    return $freelancers;
 
 }
 
    public function getAvailableVerifiedAndActiveFreelancers(){
 
-    $freelancers=Freelancer::activeAndVerified()->paginate();
-//
-    return response()->json(['success'=>true,'data'=>$freelancers]);
+    $freelancers=Freelancer::activeAndVerified()->paginate(10);
+
+    return $freelancers;
 
 }
 }

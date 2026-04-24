@@ -26,9 +26,9 @@ protected $profileService;
 
     public function index()
     {
-     $allData=$this->profileService->index();
+     $profilesWithFreelancers=$this->profileService->index();
 
-     return response()->json(['success'=>true,'data'=>$allData]);
+     return $this->successResponse(message:'Profiles and their freelancer owners',data:$profilesWithFreelancers);
     }
 
     /**
@@ -58,10 +58,12 @@ protected $profileService;
        try{
        $newProfile=$this->profileService->update($request,$id);
 
-       return response()->json(['success'=>true,'profile'=>$newProfile]);
+       return $this->successResponse(message:'profile updated successfully',data:$newProfile);
        }
        catch(Exception $e){
-        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+
+        return $this->errorResponse(message : 'profile updated failed',
+        errors:$e->getMessage(),code: 500);
        }
     }
 

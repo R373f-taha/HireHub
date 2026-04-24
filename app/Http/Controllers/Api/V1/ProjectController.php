@@ -22,9 +22,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-     $allData=$this->projectService->index();
+     $projectsWithClientsWithTags=$this->projectService->index();
 
-     return response()->json(['success'=>true,'data'=>$allData]);
+     return $this->successResponse(message:'All projects,clients and tags',data:$projectsWithClientsWithTags);
     }
 
     /**
@@ -35,13 +35,16 @@ class ProjectController extends Controller
         //budget =>json after validation
     try{
         $action=new CreateProjectAction();
+
         $project=$this->projectService->createProject($request , $action);
 
-        return response()->json($project);
+        return $this->successResponse(message:'Project created successfully ',data:$project);
 
     }
     catch(Exception $e){
-         return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+
+         return  $this->errorResponse(message:'Project created failed',errors:$e->getMessage(),code:500);
+
     }
     }
 
@@ -52,7 +55,7 @@ class ProjectController extends Controller
     {
        $project=$this->projectService->show($id);
 
-       return response()->json(['success'=>true,'project'=>$project]);
+       return $this->successResponse(message:"The project with offers,reviews and attachments ",data:$project);
     }
 
     /**

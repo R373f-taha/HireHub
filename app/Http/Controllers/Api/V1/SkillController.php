@@ -32,7 +32,11 @@ class SkillController extends Controller
      */
     public function store(CreateSkillRequest $request,$years_of_experience)
     {
-     return $this->skillService->store($request,$years_of_experience);
+
+    $skill=$this->skillService->store($request,$years_of_experience);
+
+    return $this->successResponse( message :'Skill added to freelancer successfully',
+        data : $skill);
 
     }
 
@@ -49,7 +53,9 @@ class SkillController extends Controller
      */
     public function update(UpdateSkillRequest $request, $id,$years_of_experience)
     {
-        return $this->skillService->update($id,$request,$years_of_experience);
+        $message= $this->skillService->update($id,$request,$years_of_experience);
+
+        return $this->successResponse(message:$message);
     }
 
     /**

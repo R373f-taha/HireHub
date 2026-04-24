@@ -23,7 +23,7 @@ class ClientController extends Controller
 
     $result=$this->clientService->acceptOffer($project_id,$offer_id);
 
-    return response()->json($result);
+    return $this->successResponse(message:$result['message']);
     }
     /**
      * Store a newly created resource in storage.

@@ -37,12 +37,16 @@ $this->getReviewService=$getReviewsService;
 
     public function freelancerReview($freelancerId){
 
-    return $this->getReviewService->freelancerReviews($freelancerId);
+   $result=$this->getReviewService->freelancerReviews($freelancerId);
+
+   return $this->successResponse(message:'Freelancer Reviews' ,data:$result);
     }
 
     public function  projectReview($projectId){
 
-    return $this->getReviewService->projectReview($projectId);
+    $result=$this->getReviewService->projectReview($projectId);
+
+   return $this->successResponse(message:'Project Review' ,data:$result);
     }
 
     /**

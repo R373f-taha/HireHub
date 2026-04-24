@@ -32,6 +32,7 @@ class CreateOfferRequest extends FormRequest
     {
         return [
          'project_id'=>'required|numeric|exists:projects,id',
+         'freelancer_id'=>'required|exists:freelancers,id',
          'proposed_amount'=>'required|numeric|min:100|max:1500',
          'delivered_days'=>'required|integer|min:5|max:60',
          'submission_letter'=>['required',
@@ -43,7 +44,7 @@ class CreateOfferRequest extends FormRequest
             {
                $sensitiveWords=['Cursing', 'insult', 'hatred', 'incitement', 'humiliation', 'abuse', 'assault',
                 'password', 'credit card', 'social security', 'ssn'];
-                 
+
 
                 foreach($sensitiveWords as $word){
                     if(stripos($value,$word)!== false){

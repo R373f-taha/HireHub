@@ -21,7 +21,7 @@ class UserController extends Controller
 
    $res= $this->userService->register($request);
 
-   return response()->json($res);
+   return $this->successResponse(data:$res);
 
     }
 }

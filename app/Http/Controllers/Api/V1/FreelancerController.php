@@ -28,9 +28,12 @@ class FreelancerController extends Controller
 
     $action =new CreateOfferAction();
 
-    $res=$this->submitOfferService->submitOffer($request,$action);
+    $result=$this->submitOfferService->submitOffer($request,$action);
 
-    return response()->json($res);
+    if($result['success']=='true')  return $this->successResponse(message:$result['message']);
+
+
+    else return $this->errorResponse(message:$result['message'],code:403);
 
     }
     /**
@@ -40,29 +43,51 @@ class FreelancerController extends Controller
     {
            $freelancers=$this->freelancerService->index();
 
-     return response()->json(['success'=>true,'data'=>$freelancers]);
+     return $this->paginatedResponse(
+        $freelancers,
+
+     );
     }
 
     public function availableAndVerifiedFreelancers(){
 
-    return $this->filterFreelancersService->availableAndVerifiedFreelancer();
+    $freelancers=$this->filterFreelancersService->availableAndVerifiedFreelancer();
+
+       return $this->paginatedResponse(
+        $freelancers,
+
+     );
     }
 
     public function getAvailableVerifiedFreelancersSorted(){
 
-    return $this->filterFreelancersService->getAvailableVerifiedFreelancersSorted();
+    $freelancers=$this->filterFreelancersService->getAvailableVerifiedFreelancersSorted();
+
+        return $this->paginatedResponse(
+        $freelancers,
+
+     );
     }
 
     public function getAvailableVerifiedAndActiveFreelancers(){
 
-    return $this->filterFreelancersService->getAvailableVerifiedAndActiveFreelancers();
+    $freelancers=$this->filterFreelancersService->getAvailableVerifiedAndActiveFreelancers();
+
+
+        return $this->paginatedResponse(
+        $freelancers,
+
+     );
     }
 
     public function freelancerRanking(){
 
     $freelancers=$this->freelancerService->freelancerRanking();
 
-    return response()->json(['success'=>true,'freelancers'=>$freelancers]);
+    return $this->paginatedResponse(
+        $freelancers,
+
+     );
     }
     /**
      * Store a newly created resource in storage.

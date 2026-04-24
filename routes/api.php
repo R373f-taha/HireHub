@@ -18,7 +18,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('V1/')->group(function(){
 
-
+Route::get('freelancers/',[FreelancerController::class,'index']);
 Route::get('offer/{offerId}',[OffersController::class,'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{id}', [ProjectController::class, 'show']);

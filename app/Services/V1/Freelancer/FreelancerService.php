@@ -12,14 +12,14 @@ use App\Models\V1\Project;
 class FreelancerService{
 public function index(){
 
-    $freelancers=Freelancer::all();
+    $freelancers=Freelancer::paginate(15);
 
     return $freelancers;
 }
 
 public function freelancerRanking(){
 
-return Freelancer::orderByReviews()->get();
+return Freelancer::orderByReviews()->paginate(10);
 }
 
 
