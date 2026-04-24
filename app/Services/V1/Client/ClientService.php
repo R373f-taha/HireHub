@@ -8,7 +8,15 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ClientService{
-
+/**
+ * قبول عرض معين على مشروع
+ *
+ * عند قبول عرض، يتم:
+ * 1. تحديث حالة المشروع إلى in_progress
+ * 2. تحديث حالة العرض المقبول إلى accepted
+ * 3. تحديث حالة جميع العروض الأخرى على نفس المشروع إلى rejected
+ 
+ */
 public function acceptOffer($project_id,$offer_id){
 
 DB::beginTransaction();
