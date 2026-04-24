@@ -11,12 +11,28 @@ use Illuminate\Support\Facades\Cache;
 
 class ProjectService{
 
+/**
+ * تنفيذ عملية حساسة مع قفل تلقائي لمنع التنفيذ المتزامن
+ *
+ * هذا الأسلوب يستخدم نمط "Critical Section" مع Blocking Lock،
+ * وهو بديل آمن عن كتابة try-catch-finally يدوياً مع Cache::lock().
+ *
+ * يمنع هذا الأسلوب مشكلة Cache Stampede حيث:
+ * - عند انتهاء صلاحية الكاش،
+ * - طلب واحد فقط يقوم بإعادة حسابه،
+ * - وجميع الطلبات الأخرى تنتظر (لا تذهب إلى قاعدة البيانات).
+ *
+ * الميزات:
+ * - Blocking: الطلبات الفاشلة تنتظر وليس تفشل فوراً.
+ * - Double-check: بعد الحصول على القفل، تتأكد من الحاجة للتنفيذ.
+ * - Auto-release: يحرر القفل تلقائياً حتى لو حدث Exception.
+ * - Timeout: يحرر القفل تلقائياً بعد المدة المحددة.
+
+ */
 public function index(){
 
-    //$projects=Project::with('client')->where('project_status','open')->with('tags')->paginate(15);
 
     $projects=Cache::remember('projects',3600,function(){
-
 
    return  Cache::withoutOverlapping('projects-lock',function(){//withoutOverlapping)() = block + try +finally
 
