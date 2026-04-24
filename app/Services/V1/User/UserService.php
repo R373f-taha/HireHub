@@ -10,6 +10,7 @@ use App\Models\V1\Client;
 use App\Models\V1\Freelancer;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UserService{
@@ -59,6 +60,7 @@ $responseData=match($user->role){
     'location_info'=>json_encode($data['location_info'] ?? []),
 ]),
     'token'=>$token
+
 ],
 'client'=>[
     'user'=>$user,
@@ -69,42 +71,20 @@ $responseData=match($user->role){
     'token'=>$token
 ],
 };
+
+if($user->role==='freelancer'){
+
+    Cache::forget('availableAndVerifiedFreelancer');
+
+    Cache::forget('availableVerifiedFreelancersSorted');
+
+    Cache::forget('AvailableVerifiedAndActiveFreelancers');
+}
 return $responseData;
 
 
 }
-// if($user['role']==='admin'){
-// return ['user'=>$user,
-// 'admin'=>$user,
-// 'token'=>$token];
-// }
 
-// else if($user['role']==='freelancer'){
-// $freelancer=Freelancer::create([
-//     'user_id'=>$user->id,
-//     'is_verified'=>$request->is_verified,
-//     'is_active'=>$request->is_active,
-//     'location_info'=>$request->location_info
-// ]);
-// return ['user'=>$user,
-// 'freelancer'=>$freelancer,
-// 'token'=>$token];
-// }
-
-// else if($user['role']==='client'){
-//     $client=Client::create([
-//         'user_id'=>$user->id,
-//         'location_info'=>$request->location_info
-//     ]);
-
-// return ['user'=>$user,
-// 'client'=>$client,
-// 'role'=>$user['role'],
-// 'token'=>$token];
-// }
-
-//  return ['invalid role'];
-///}
 
 public function login(Request $request){
 
