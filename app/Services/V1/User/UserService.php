@@ -11,6 +11,7 @@ use App\Models\V1\Client;
 use App\Models\V1\Freelancer;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UserService{
@@ -28,7 +29,7 @@ class UserService{
     }
 public function register(CreateUserRequest $request){
 
-// $action=new CreateUserAction();
+
 
 $data=$request->validated();
 
@@ -60,6 +61,7 @@ $responseData=match($user->role){
     'location_info'=>json_encode($data['location_info'] ?? []),
 ]),
     'token'=>$token
+
 ],
 'client'=>[
     'user'=>$user,
@@ -70,6 +72,15 @@ $responseData=match($user->role){
     'token'=>$token
 ],
 };
+
+if($user->role==='freelancer'){
+
+    Cache::forget('availableAndVerifiedFreelancer');
+
+    Cache::forget('availableVerifiedFreelancersSorted');
+
+    Cache::forget('AvailableVerifiedAndActiveFreelancers');
+}
 return $responseData;
 
 

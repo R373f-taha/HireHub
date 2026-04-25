@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-    
+
 	'enable' => false,
 
 	/*
@@ -391,6 +391,7 @@ return [
 		\Illuminate\Container\Container::class,
 		\Illuminate\Foundation\Application::class,
 		\Laravel\Lumen\Application::class
+        
 	],
 
 	/*
