@@ -13,27 +13,31 @@ public function index(){
 
     $projects=Project::with('client')->where('project_status','open')->with('tags')->paginate(15);
 
-    // foreach($projects as $project){
-    //    $project->client;
-    // }
-
     return  ProjectResource::collection($projects);
 }
 
 public function show($id){
 
 $project=Project::findOrFail($id);
+
 $offers=$project->offers;
+
 $attachments=$project->attachments;
+
 if($project->project_status !== 'closed'){
+
 
 $review=' project status is not closed so this project doesn`t have any review ';
 }
+
 else{
+
 $review=$project->review;
+
 }
 
 return [
+
 'details'=>[
     'project'=>$project,
     'offers'=>$offers,
