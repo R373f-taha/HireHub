@@ -61,7 +61,7 @@ class CreateProjectRequest extends FormRequest
             {
                 $sensitiveWords=['Cursing', 'insult', 'hatred', 'incitement', 'humiliation', 'abuse', 'assault',
                 'password', 'credit card', 'social security', 'ssn'];
-            
+
 
                 foreach($sensitiveWords as $word){
                     if(stripos($value,$word)!== false){

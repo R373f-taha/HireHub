@@ -5,6 +5,8 @@ namespace App\Services\V1\Project;
 use App\Actions\V1\Project\CreateProjectAction;
 use App\Http\Requests\V1\Project\CreateProjectRequest;
 use App\Http\Resources\V1\Project\ProjectResource;
+use App\Jobs\SendNewProjectCreatedJob;
+use App\Mail\NewProjectCreatedMail;
 use App\Models\V1\Project;
 use Illuminate\Support\Facades\Cache;
 
@@ -90,9 +92,11 @@ $project=$action->execute($data);
 
 if($project){
 
+    SendNewProjectCreatedJob::dispatch($project)->onQueue('emails');
+
     Cache::forget('projects');
 
-    return ['success'=>true,'project'=>$project];
+    return ['success'=>true,'project'=>$project,'message'=>'Project created successfully 💛😊 we will send an email notification for all freelancers'];
 }
 
 else return ['success'=>false];

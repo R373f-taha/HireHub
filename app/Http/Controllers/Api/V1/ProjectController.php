@@ -38,7 +38,7 @@ class ProjectController extends Controller
 
         $project=$this->projectService->createProject($request , $action);
 
-        return $this->successResponse(message:'Project created successfully ',data:$project);
+        return $this->successResponse(message:$project['message'],data:$project);
 
     }
     catch(Exception $e){
