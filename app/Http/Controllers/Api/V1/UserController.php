@@ -24,4 +24,6 @@ class UserController extends Controller
    return $this->successResponse(data:$res);
 
     }
+
+
 }

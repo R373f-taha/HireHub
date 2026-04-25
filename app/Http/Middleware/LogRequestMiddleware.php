@@ -27,7 +27,7 @@ class LogRequestMiddleware
 
         $duration =(microtime(true)- $start)*1000;
 
-         $userId = auth()->user()?->id ?? 'guest';
+         $userId = Auth::user()?->id ?? 'guest';
 
          Log::info('API_REQUEST',[
 

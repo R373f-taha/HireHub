@@ -3,6 +3,8 @@
 namespace App\Services\V1\Review;
 
 use App\Http\Requests\V1\Review\storeReviewRequest;
+use App\Jobs\ReviewsAverageJob;
+use App\Models\V1\Freelancer;
 use App\Models\V1\Project;
 use App\Models\V1\Review;
 
@@ -37,6 +39,12 @@ $acceptedOffer=$project->offers()->where('offer_status','accepted')->first();
             'project_rating' => $request->project_rating,
             'comment' => $request->comment,
         ]);
+
+$freelancer=Freelancer::where('id',$review['freelancer_id'])->first();
+
+ReviewsAverageJob::dispatch($freelancer)->onQueue('emails');
+
+
 
         return response()->json([
             'success' => true,

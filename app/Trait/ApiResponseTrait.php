@@ -51,6 +51,7 @@ return response()->json($response,$code);
 }
 
 public function validationErrors($message,$errors){
+    
     return $this->errorResponse($message,422,$errors);
 }
 }
