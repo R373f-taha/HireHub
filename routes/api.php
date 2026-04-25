@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('V1/')->group(function(){
-
+Route::post('/users/login', [UserController::class, 'login']);  
 Route::get('freelancers/',[FreelancerController::class,'index']);
 Route::get('offer/{offerId}',[OffersController::class,'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
@@ -33,7 +33,7 @@ Route::get('freelancers/available/verified/sorted',[FreelancerController::class,
 Route::get('freelancers/active',[FreelancerController::class,'getAvailableVerifiedAndActiveFreelancers']);
 Route::get('admin/panel',[AdminController::class,'adminPanel'])->middleware(['auth:sanctum','is_admin']);
 Route::get('freelancers/profiles',[ProfileController::class,'index']);
-
+ Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
 });
 

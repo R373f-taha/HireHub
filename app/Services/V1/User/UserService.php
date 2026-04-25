@@ -6,6 +6,7 @@ use App\Actions\V1\Client\CreateClientAction;
 use App\Actions\V1\Freelancer\CreateFreelancerAction;
 use App\Actions\V1\User\CreateUserAction;
 use App\Http\Requests\V1\User\CreateUserRequest;
+use App\Http\Requests\V1\User\LoginRequest;
 use App\Models\V1\Client;
 use App\Models\V1\Freelancer;
 use App\Models\V1\User;
@@ -85,15 +86,14 @@ return $responseData;
 
 }
 
-
-public function login(Request $request){
+public function login(LoginRequest $request){
 
 $user=User::where('email',$request->email)->first();
 
 if(!$user || !Hash::check($request->password,$user->password)){
 
 return [
-    'success' => false,
+    'success'=>false,
     'message' => 'Invalid credentials'
 ];
 
@@ -102,17 +102,21 @@ return [
 $token=$user->createToken('login_token')->plainTextToken;
 
     return [
-        'success' => true,
+        'success'=>true,
+        'data'=>[
         'user' => $user,
-        'token' => $user->createToken('login_token')->plainTextToken
+        'token' => $user->createToken('login_token')->plainTextToken,
+        'role'=>$user->role]
     ];
 
 }
 
 public function logout(Request $request){
+
 $request->user()->currentAccessToken()->delete();
+
    return [
-            'success' => true,
+
             'message' => 'Logged out successfully'
         ];
 }

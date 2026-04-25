@@ -12,31 +12,46 @@ use Illuminate\Support\Facades\Cache;
 
 
 class ProjectService{
-
 /**
- * تنفيذ عملية حساسة مع قفل تلقائي لمنع التنفيذ المتزامن
- *
- * هذا الأسلوب يستخدم نمط "Critical Section" مع Blocking Lock،
- * وهو بديل آمن عن كتابة try-catch-finally يدوياً مع Cache::lock().
- *
- * يمنع هذا الأسلوب مشكلة Cache Stampede حيث:
- * - عند انتهاء صلاحية الكاش،
- * - طلب واحد فقط يقوم بإعادة حسابه،
- * - وجميع الطلبات الأخرى تنتظر (لا تذهب إلى قاعدة البيانات).
- *
- * الميزات:
- * - Blocking: الطلبات الفاشلة تنتظر وليس تفشل فوراً.
- * - Double-check: بعد الحصول على القفل، تتأكد من الحاجة للتنفيذ.
- * - Auto-release: يحرر القفل تلقائياً حتى لو حدث Exception.
- * - Timeout: يحرر القفل تلقائياً بعد المدة المحددة.
 
- */
+* Execute a critical operation with automatic locking to prevent concurrent execution
+
+*
+
+* This method uses the "Critical Section" pattern with Blocking Lock,
+
+* It is a safe alternative to manually writing try-catch-finally with Cache::lock().
+
+*
+
+* This method prevents the Cache Stampede problem where:
+
+* - When the cache expires,
+
+* - Only one request is recalculated,
+
+* - All other requests wait (they do not go to the database).
+
+*
+
+* Features:
+
+* - Blocking: Failed requests wait and are not immediately rejected.
+
+* - Double-check: After obtaining the lock, you verify the need to execute.
+
+* - Auto-release: Automatically releases the lock even if an exception occurs.
+
+* * - Timeout: The lock is automatically released after the specified time.
+
+*/
+
 public function index(){
 
 
     $projects=Cache::remember('projects',3600,function(){
 
-   return  Cache::withoutOverlapping('projects-lock',function(){//withoutOverlapping)() = block + try +finally
+   return  Cache::withoutOverlapping('projects-lock',function(){//withoutOverlapping() = block + try +finally
 
     $data=Project::with('client')->where('project_status','open')->with('tags')->paginate(15);
 
