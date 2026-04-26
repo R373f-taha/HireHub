@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\DB;
 
 class ClientService{
 
-//public function acceptOffer($project_id,$offer_id){
+/**
+ * The function verifies that a pending offer exists for an open project and that the authenticated client owns the project.
+ * It then accepts the selected offer, rejects all other pending offers for the same project, updates the project status to in progress,
+ * clears relevant caches, and dispatches asynchronous email notifications (accepted and rejected) via dedicated jobs.
+ * @param mixed $project_id
+ * @param mixed $offer_id
+ * @return array{message: string}
+ */
 
 public function acceptOffer($project_id,$offer_id){
 
@@ -63,11 +70,15 @@ $project->update(['project_status'=>'in_progress']);
 
 Cache::forget('projects');
 
+Cache::forget('availableAndVerifiedFreelancer');
+
+Cache::forget('availableVerifiedFreelancersSorted');
+
  DB::commit();
 
-SendNewOfferAcceptedJob::dispatch($freelancer,$offer,$project)->onQueue('emails');
+SendNewOfferAcceptedJob::dispatch($freelancer,$offer,$project)->onQueue('emails');//send an email to accepted freelancer
 
-foreach($rejectedOffers as $rejectedOffer){
+foreach($rejectedOffers as $rejectedOffer){//send an email notification to each rejected freelancer
 
 $rejectedFreelancer=Freelancer::findOrFail($rejectedOffer->freelancer_id);
 
@@ -81,7 +92,8 @@ return [
 catch(Exception $e){
     DB::rollBack();
     return [
-    'message'=>'offer accepted failed ... something is wrong '
+
+    'message'=>'offer accepted failed 🤦‍♀️🤔'.$e->getMessage()
 
 ];
 }

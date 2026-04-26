@@ -17,6 +17,25 @@
 
 ---
 
+🔐 Authentication Accounts
+
+👑 Admin Account
+
+Email: admin@hirehub.com'
+Password: admin123
+
+👤 Client Account
+
+Email: client@hirehub.com
+Password: client123
+
+👤 Freelancer Account
+
+Email: freelancer@hirehub.com
+Password: freelancer123
+
+---
+
 ## ✨ Key Features
 
 - ✅ **Complete Project Management** (Create, Edit, Delete, Search & Filter)
@@ -32,7 +51,7 @@
 
 ## 🗺️ API Routes Guide
 
-### 🌐 Public Routes (No Login Required)
+### 🌐 Public Routes (with Login Required)
 
 | Method | URI | Description |
 | :--- | :--- | :--- |
@@ -41,6 +60,8 @@
 | `GET` | `/api/V1/projects/{id}` | Show specific project details |
 | `GET` | `/api/V1/bid/{f}` | Get bid information |
 | `POST` | `/api/V1/users/register` | Register new user |
+| `POST` | `/api/V1/users/login`    | Login |
+| `POST` | `/api/V1/users/logout`    | Logout |
 | `GET` | `/api/V1/offers` | List all offers |
 | `GET` | `/api/V1/freelancer/{freelancerId}/reviews` | Get freelancer reviews |
 | `GET` | `/api/V1/project/{projectId}/reviews` | Get project reviews |
@@ -141,6 +162,29 @@ php artisan migrate --seed
 # 5. Start the development server
 php artisan serve
 ```
+
+---
+
+To activate the email responsible for sending emails:
+
+Prerequisites💛:
+
+The email must have two-factor authentication enabled.
+
+Access Gmail settings and navigate to "App Passwords" under security settings.
+
+Generate a new app password by specifying the app name and copying the generated password.
+
+Email Configuration Settings:
+
+and in {.env} file : 
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587 MAIL_USERNAME=[Your Email] 
+MAIL_PASSWORD=[Generated App Password Here]
+MAIL_ENCRYPTION=tls MAIL_FROM_ADDRESS=[Your Email]
+MAIL_FROM_NAME=[App Name]
 
 ---
 

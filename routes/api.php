@@ -17,7 +17,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('V1/')->group(function(){
-Route::post('/users/login', [UserController::class, 'login']);  
+
+Route::post('/users/login', [UserController::class, 'login']);
 Route::get('freelancers/',[FreelancerController::class,'index']);
 Route::get('offer/{offerId}',[OffersController::class,'show']);
 Route::get('/projects', [ProjectController::class, 'index']);
@@ -33,7 +34,7 @@ Route::get('freelancers/available/verified/sorted',[FreelancerController::class,
 Route::get('freelancers/active',[FreelancerController::class,'getAvailableVerifiedAndActiveFreelancers']);
 Route::get('admin/panel',[AdminController::class,'adminPanel'])->middleware(['auth:sanctum','is_admin']);
 Route::get('freelancers/profiles',[ProfileController::class,'index']);
- Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
 });
 
@@ -42,14 +43,11 @@ Route::prefix('V1/')->group(function(){
 Route::middleware(['auth:sanctum','is_verified_freelancer'])->group(function(){
 
 Route::post('/profile',[ProfileController::class,'store']);
-Route::patch('/profile/{id}',[ProfileController::class,'update']);//ckeck each freelancer edit only his profile
+Route::patch('/profile/{id}',[ProfileController::class,'update']);
 Route::Post('/offer',[OffersController::class,'store']);
 Route::post('freelancer/offer/submit',[FreelancerController::class,'submitOffer']);
 Route::post('/skill/with/{years_of_experience}',[SkillController::class,'store']);
 Route::patch('/skill/{id}/with/{years_of_experience}',[SkillController::class,'update']);
-
-
-
 
 
 });});
@@ -66,5 +64,7 @@ Route::prefix('V1/')->group(function(){
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
     Route::post('reviews',[ReviewController::class,'store']);
     Route::get('ranking/freelancers/by/ratings',[FreelancerController::class,'freelancerRanking']);
+    Route::post('review/store',[ReviewController::class,'store']);
+
 });});
 

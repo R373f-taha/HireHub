@@ -7,10 +7,7 @@ use App\Models\V1\Freelancer;
 use App\Models\V1\Review;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
-//use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
-//use Illuminate\Foundation\Queue\Queueable;
-// use  Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use  Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +23,7 @@ class ReviewsAverageJob implements ShouldQueue
      */
     public function __construct(Freelancer $freelancer)
     {
-        $this->freelancer=$freelancer;
+        $this->freelancer = $freelancer->load('user'); ;
     }
 
     /**

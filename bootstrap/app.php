@@ -17,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        $middleware->alias(['is_verified_freelancer'=>EnsureIsVerifiedFreelancer::class,
+        $middleware->alias([
+        
+        'is_verified_freelancer'=>EnsureIsVerifiedFreelancer::class,
 
         'is_client'=>ClientMiddleware::class,
         
