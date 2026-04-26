@@ -14,6 +14,10 @@ class ClientController extends Controller
      * Display a listing of the resource.
      */
     protected $clientService;
+
+
+    //note: Adding a Client account involves registering a user as a client.
+
     public function __construct(ClientService $clientService)
     {
          $this->clientService=$clientService;

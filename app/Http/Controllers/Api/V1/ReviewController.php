@@ -32,7 +32,15 @@ $this->getReviewService=$getReviewsService;
      */
     public function store(storeReviewRequest $request)
     {
-     return   $this->reviewService->store($request);
+        
+     $result=$this->reviewService->store($request);
+
+
+    if($result['success']=='true')  return $this->successResponse(message:$result['message']);
+
+
+    else return $this->errorResponse(message:$result['message'],code:403);
+
     }
 
     public function freelancerReview($freelancerId){

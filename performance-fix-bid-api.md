@@ -4,7 +4,7 @@ API: `GET api/bids/{id}`
 
 OfferBidService  في
 
-  الكود الذي يسبب المشكلة :
+  الكود الذي سبب المشكلة :
 
 public function bid($id){
 

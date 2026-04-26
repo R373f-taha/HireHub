@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 class FreelancerController extends Controller
 {
        protected $freelancerService,$filterFreelancersService,$submitOfferService;
+
+
+    //note: Adding a Freelancer account involves registering a user as a Freelancer.
+
     public function __construct(FreelancerService $freelancerService,FilterFreelancersService $filterFreelancersService
     ,SubmitOfferByFreelancer $submitOfferByFreelancer)
     {
@@ -41,7 +45,7 @@ class FreelancerController extends Controller
      */
     public function index()
     {
-           $freelancers=$this->freelancerService->index();
+     $freelancers=$this->freelancerService->index();
 
      return $this->paginatedResponse(
         $freelancers,
@@ -122,3 +126,4 @@ class FreelancerController extends Controller
     }
 
 }
+

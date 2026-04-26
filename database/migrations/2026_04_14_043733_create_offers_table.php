@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
              $table->index('project_id');
             $table->index('freelancer_id');
+            $table->index('offer_status');
         });
     }
 
