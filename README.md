@@ -21,18 +21,15 @@
 
 👑 Admin Account
 
-Email: admin@hirehub.com'
-Password: admin123
+Email: admin@hirehub.com                              Password: admin123
 
 👤 Client Account
 
-Email: client@hirehub.com
-Password: client123
+Email: client@hirehub.com                             Password: client123
 
 👤 Freelancer Account
 
-Email: freelancer@hirehub.com
-Password: freelancer123
+Email: freelancer@hirehub.com                        Password: freelancer123
 
 ---
 
@@ -192,6 +189,7 @@ MAIL_FROM_NAME=[App Name]
 
 For developers who want to integrate HireHub with external applications (mobile apps, separate frontends):
 
+**
 **Postman Documentation:** https://documenter.getpostman.com/view/50321677/2sBXqDtPXQ
 
 ---

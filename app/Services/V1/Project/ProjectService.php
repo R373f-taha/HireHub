@@ -12,54 +12,14 @@ use Illuminate\Support\Facades\Cache;
 
 
 class ProjectService{
-/**
 
-* Execute a critical operation with automatic locking to prevent concurrent execution
-
-*
-
-* This method uses the "Critical Section" pattern with Blocking Lock,
-
-* It is a safe alternative to manually writing try-catch-finally with Cache::lock().
-
-*
-
-* This method prevents the Cache Stampede problem where:
-
-* - When the cache expires,
-
-* - Only one request is recalculated,
-
-* - All other requests wait (they do not go to the database).
-
-*
-
-* Features:
-
-* - Blocking: Failed requests wait and are not immediately rejected.
-
-* - Double-check: After obtaining the lock, you verify the need to execute.
-
-* - Auto-release: Automatically releases the lock even if an exception occurs.
-
-* * - Timeout: The lock is automatically released after the specified time.
-
-*/
 
 public function index(){
 
 
-    $projects=Cache::remember('projects',3600,function(){
+    $projects=Cache::flexible('projects',[300,3600],function(){
 
-   return  Cache::withoutOverlapping('projects-lock',function(){//withoutOverlapping() = block + try +finally
-
-    $data=Project::with('client')->where('project_status','open')->with('tags')->paginate(15);
-
-          Cache::put('projects',$data,3600);
-
-          return $data;
-    },60);
-
+    return Project::with('client')->where('project_status','open')->with('tags')->paginate(15);
     });
 
 

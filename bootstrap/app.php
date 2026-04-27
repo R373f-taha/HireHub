@@ -7,6 +7,7 @@ use App\Http\Middleware\LogRequestMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,15 +19,19 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->alias([
-        
+
         'is_verified_freelancer'=>EnsureIsVerifiedFreelancer::class,
 
         'is_client'=>ClientMiddleware::class,
-        
+
         'is_admin'=>AdminMiddleware::class
 
    ]);
    $middleware->append(LogRequestMiddleware::class);
+
+       $middleware->web(prepend: [
+            InvokeDeferredCallbacks::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

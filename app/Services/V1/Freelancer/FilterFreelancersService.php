@@ -9,20 +9,10 @@ class FilterFreelancersService{
 
    public function availableAndVerifiedFreelancer(){
 
-    $freelancers=Cache::remember('availableAndVerifiedFreelancer',3600,function(){
+    $freelancers=Cache::flexible('availableAndVerifiedFreelancer',[300,3600],function(){
 
-    return  Cache::withoutOverlapping('availableAndVerifiedFreelancer-lock',function(){//withoutOverlapping)() = block + try +finally
+    return Freelancer::with('profile')->availableAndVerifiedFreelancer()->paginate(10);
 
-    $data=Freelancer::with('profile')->availableAndVerifiedFreelancer()->paginate(10);
-
-          Cache::put('availableAndVerifiedFreelancer',$data,3600);
-
-    $sortedFreelancers=Freelancer::with('profile')->availableAndVerifiedFreelancer()->orderBy('created_at','desc')->paginate(10);
-
-          Cache::put('availableVerifiedFreelancersSorted',$sortedFreelancers,3600);
-
-          return $data;
-    },30);
     }
 
     );
@@ -35,27 +25,21 @@ class FilterFreelancersService{
    public function getAvailableVerifiedFreelancersSorted(){
 
 
-   $freelancers=Cache::get('availableVerifiedFreelancersSorted');
+  $freelancers=Cache::flexible('availableVerifiedFreelancersSorted',[300,3600],function(){
 
-   if($freelancers !=null )
+   return Freelancer::with('profile')->availableAndVerifiedFreelancer()->orderBy('created_at','desc')->paginate(10);
+
+          } );
 
     return $freelancers;
-
-    else return $this->availableAndVerifiedFreelancer();
    }
    public function getAvailableVerifiedAndActiveFreelancers(){
 
-    $freelancers=Cache::remember('AvailableVerifiedAndActiveFreelancers',3600,function(){
+    $freelancers=Cache::flexible('AvailableVerifiedAndActiveFreelancers',[300,3600],function(){
+
+    return Freelancer::activeAndVerified()->paginate(10);
 
 
-    return  Cache::withoutOverlapping('AvailableVerifiedAndActiveFreelancers-lock',function(){//withoutOverlapping)() = block + try +finally
-
-    $data=Freelancer::activeAndVerified()->paginate(10);
-
-          Cache::put('AvailableVerifiedAndActiveFreelancers',$data,3600);
-
-          return $data;
-    },30);
     }
 
     );

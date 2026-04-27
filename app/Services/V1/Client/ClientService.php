@@ -33,7 +33,7 @@ $offer=Offer::where('project_id',$project_id)->where('id',$offer_id)
 
 ->where('offer_status','pending')->first();
 
-// var_dump($offer);
+
     if (!$offer) {
         return [
             'message' => 'Offer not found or already processed'
