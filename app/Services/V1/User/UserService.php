@@ -75,11 +75,11 @@ $responseData=match($user->role){
 
 if($user->role==='freelancer'){
 
-    Cache::forget('availableAndVerifiedFreelancer');
+    defer(fn()=>Cache::forget('availableAndVerifiedFreelancer'));
 
-    Cache::forget('availableVerifiedFreelancersSorted');
+    defer(fn()=>Cache::forget('availableVerifiedFreelancersSorted'));
 
-    Cache::forget('AvailableVerifiedAndActiveFreelancers');
+    defer(fn()=>Cache::forget('AvailableVerifiedAndActiveFreelancers'));
 }
 return $responseData;
 

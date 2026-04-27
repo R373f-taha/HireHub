@@ -54,7 +54,7 @@ if($project){
 
     SendNewProjectCreatedJob::dispatch($project)->onQueue('emails');
 
-    Cache::forget('projects');
+    defer(fn()=>Cache::forget('projects'));//refresh cache in the background
 
     return ['success'=>true,'project'=>$project,'message'=>'Project created successfully 💛😊 we will send an email notification for all freelancers'];
 }
